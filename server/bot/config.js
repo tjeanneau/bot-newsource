@@ -4,9 +4,10 @@
 
 import { Meteor } from 'meteor/meteor';
 import Botkit from 'botkit';
+import Slack from 'slack-node';
 
+let slack = new Slack(Meteor.settings.SLACK_BOT_TOKEN);
 let controller = Botkit.slackbot();
-
 let bot = controller.spawn({
         token: Meteor.settings.SLACK_BOT_TOKEN
 });
@@ -17,6 +18,4 @@ bot.startRTM(function(err, bot, payload) {
     }
 });
 
-controller.hears('Je t\'aime !',['direct_message','direct_mention','mention'],function(bot,message) {
-    bot.reply(message,'Moi je t\'aime encore plus ! <3');
-});
+export { slack, controller, bot };
