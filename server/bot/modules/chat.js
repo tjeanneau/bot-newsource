@@ -3,16 +3,19 @@
  */
 
 import { Meteor } from 'meteor/meteor';
-import { slack, bot } from '../config';
-import { HELLO } from '../library/chat';
+import { Random } from 'meteor/random';
+import { HELLO, WHOAREYOU, R_WHOAREYOU } from '../library/chat';
 
-var hello = (bot, message) => {
-    let text = message.text.toLowerCase();
-    for(let i = 0 ; i < HELLO.length ; i++){
+let hello = (bot, message, user) => {
+    let text = message.text.toLowerCase(), i;
+    for(i = 0 ; i < HELLO.length ; i++){
         if(text.indexOf(HELLO[i]) > -1){
-            slack.api('users.info', { user: message.user }, function(err, response){
-                bot.reply(message, HELLO[i] + ' ' + response.user.name + ' !');
-            });
+            bot.reply(message, 'Bonjour ' + user.name + ' !');
+        }
+    }
+    for(i = 0 ; i < WHOAREYOU.length ; i++){
+        if(text.indexOf(WHOAREYOU[i]) > -1){
+            bot.reply(message, Random.choice(R_WHOAREYOU));
         }
     }
 };
