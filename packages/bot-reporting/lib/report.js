@@ -2,34 +2,43 @@
  * Created by thomas on 18/04/16.
  */
 
+import { Meteor } from 'meteor/meteor';
 import { slack, controller } from 'meteor/newsource:bot-core';
+import { Report } from './collections/report';
 
-controller.hears('report', ['direct_mention','direct_message'], function(bot, message) {
-    slack.api('users.info', { user: message.user }, function(err, response){
+controller.hears('report', ['direct_mention','direct_message'], Meteor.bindEnvironment((bot, message) => {
+    slack.api('users.info', { user: message.user }, Meteor.bindEnvironment((err, response) => {
+        const number = Report.find({}).count();
+        const reportId = Report.insert({
+            number: number + 1
+        });
         let start = (err, convo) => {
             convo.say('Let\'s recap what happened last week in your startup ' + response.user.name + '! :simple_smile:');
             learn(message, convo);
         };
         let learn = (message, convo) => {
-            convo.ask('What did you learn about your startup/business during the last week?', (response, convo) => {
+            convo.ask('What did you learn about your startup/business during the last week?', Meteor.bindEnvironment((response, convo) => {
                 convo.say('Thanks for your answer ! So you have learn: ' + response.text);
+                Report.update({_id: reportId}, { $set: { learn: response.text }});
                 metrics(message, convo);
                 convo.next();
-            });
+            }));
         };
         let metrics = (message, convo) => {
-            convo.ask('List key metrics you’re tracking, where they’re at, and compare with last few weeks?', (response, convo) => {
+            convo.ask('List key metrics you’re tracking, where they’re at, and compare with last few weeks?', Meteor.bindEnvironment((response, convo) => {
                 convo.say('Thanks for your answer ! So you\'re metrics are: ' + response.text);
+                Report.update({_id: reportId}, { $set: { metrics: response.text }});
                 feeling(message, convo);
                 convo.next();
-            });
+            }));
         };
         let feeling = (message, convo) => {
-            convo.ask('Overall, how is your startup feeling?', (response, convo) => {
+            convo.ask('Overall, how is your startup feeling?', Meteor.bindEnvironment((response, convo) => {
                 convo.say('Thanks for your answer ! So you feel: ' + response.text);
+                Report.update({_id: reportId}, { $set: { feeling: response.text }});
                 addProblem(message, convo);
                 convo.next();
-            });
+            }));
         };
         let addProblem = (message, convo) => {
             convo.ask('Do you want to report a problem?', [
@@ -100,5 +109,5 @@ controller.hears('report', ['direct_mention','direct_message'], function(bot, me
             });
         };
         bot.startConversation(message, start);
-    });
-});
+    }));
+}));

@@ -1,2 +1,2 @@
-import './lib/collections/form';
+import './lib/collections/report';
 import './lib/report';
