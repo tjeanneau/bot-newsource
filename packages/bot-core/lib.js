@@ -1,4 +1,4 @@
-import './lib/config';
-import { slack, rtm, controller, bot } from './lib/config';
+import './config';
+import { slack, rtm, controller, bot } from './config';
 
 export { slack, rtm, controller, bot };
