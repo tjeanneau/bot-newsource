@@ -5,6 +5,7 @@
 import { Meteor } from 'meteor/meteor';
 import { slack, controller } from 'meteor/newsource:bot-core';
 import { Report } from './collections/report';
+import { i18n } from 'meteor/anti:i18n';
 
 controller.hears('report', ['direct_mention','direct_message'], Meteor.bindEnvironment((bot, message) => {
     slack.api('users.info', { user: message.user }, Meteor.bindEnvironment((err, response) => {
@@ -13,7 +14,7 @@ controller.hears('report', ['direct_mention','direct_message'], Meteor.bindEnvir
             number: number + 1
         });
         let start = (err, convo) => {
-            convo.say('Let\'s recap what happened last week in your startup ' + response.user.name + '! :simple_smile:');
+            convo.say(i18n('welcome') + response.user.name + '! :simple_smile:');
             learn(message, convo);
         };
         let learn = (message, convo) => {

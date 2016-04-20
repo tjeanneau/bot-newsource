@@ -16,7 +16,8 @@ Package.onUse(function(api) {
     'ecmascript',
     'aldeed:simple-schema@1.5.3',
     'aldeed:collection2@2.9.1',
-    'newsource:bot-core@0.0.1'  
+    'newsource:bot-core@0.0.1',
+    'anti:i18n@0.4.3'
   ]);
   api.mainModule('lib.js', 'server');
 });
