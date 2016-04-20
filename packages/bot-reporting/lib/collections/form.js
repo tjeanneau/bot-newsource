@@ -2,6 +2,8 @@
  * Created by thomas on 19/04/16.
  */
 
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+
 Form = new Mongo.Collection('Form');
 
 Form.schema = new SimpleSchema({

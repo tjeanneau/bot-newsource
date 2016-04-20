@@ -1,5 +1,5 @@
 Package.describe({
-  name: 'newsource:bot-reporting',
+  name: 'newsource:bot-chat',
   version: '0.0.1',
   // Brief, one-line summary of the package.
   summary: '',
@@ -14,9 +14,7 @@ Package.onUse(function(api) {
   api.versionsFrom('1.3.1');
   api.use([
     'ecmascript',
-    'aldeed:simple-schema@1.5.3',
-    'aldeed:collection2@2.9.1',
-    'newsource:bot-core@0.0.1'  
+    'random'
   ]);
   api.mainModule('lib.js', 'server');
 });
@@ -24,6 +22,6 @@ Package.onUse(function(api) {
 Package.onTest(function(api) {
   api.use('ecmascript');
   api.use('tinytest');
-  api.use('newsource:bot-reporting');
-  api.mainModule('bot-reporting-tests.js');
+  api.use('newsource:bot-chat');
+  api.mainModule('bot-chat-tests.js');
 });

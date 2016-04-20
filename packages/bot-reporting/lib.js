@@ -1,5 +1,5 @@
-// Write your package code here!
-
-// Variables exported by this module can be imported by other packages and
-// applications. See bot-reporting-tests.js for an example of importing.
-export const name = 'bot-reporting';
+import './lib/collections/form';
+import './lib/modules/_modules';
+import './lib/modules/form';
+import './lib/modules/reporting';
+import './lib/direct_message';
