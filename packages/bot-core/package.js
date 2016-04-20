@@ -18,6 +18,5 @@ Package.onUse(function(api) {
 
 Npm.depends({
   'botkit': '0.1.1',
-  'slack-client': '2.0.4',
   'slack-node': '0.2.0'
 });

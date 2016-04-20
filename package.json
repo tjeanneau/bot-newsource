@@ -6,10 +6,7 @@
   },
   "dependencies": {
     "botkit": "^0.1.1",
-    "bufferutil": "^1.2.1",
     "meteor-node-stubs": "^0.2.0",
-    "slack-client": "^2.0.4 ",
-    "slack-node": "^0.2.0",
-    "utf-8-validate": "^1.2.1"
+    "slack-node": "^0.2.0"
   }
 }
