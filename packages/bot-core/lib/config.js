@@ -4,18 +4,24 @@
 
 import { Meteor } from 'meteor/meteor';
 import Botkit from 'botkit';
-import Slack from 'slack-node';
+import SlackClient from 'slack-client';
+import SlackNode from 'slack-node';
 
-let slack = new Slack(Meteor.settings.SLACK_BOT_TOKEN);
+const token = Meteor.settings.SLACK_BOT_TOKEN;
+let RtmClient = SlackClient.RtmClient;
+
 let controller = Botkit.slackbot();
+let rtm = new RtmClient(token);
+let slack = new SlackNode(token);
 let bot = controller.spawn({
-        token: Meteor.settings.SLACK_BOT_TOKEN
+        token: token
 });
 
+rtm.start();
 bot.startRTM(function(err, bot, payload) {
     if (err) {
         throw new Error('Could not connect to Slack');
     }
 });
 
-export { slack, controller, bot };
+export { slack, rtm, controller, bot };

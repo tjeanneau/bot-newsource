@@ -20,3 +20,5 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 random
 aldeed:simple-schema
 aldeed:collection2
+newsource:bot-core
+newsource:bot-reporting
