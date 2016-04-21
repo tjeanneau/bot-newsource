@@ -20,4 +20,4 @@ bot.startRTM(function(err, bot, payload) {
     }
 });
 
-export { slack, controller, bot };
+export { slack, controller, bot, };

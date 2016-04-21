@@ -7,7 +7,7 @@ import { slack, controller } from 'meteor/newsource:bot-core';
 import { Report } from './collections/report';
 import { i18n } from 'meteor/anti:i18n';
 
-controller.hears('report', ['direct_mention','direct_message'], Meteor.bindEnvironment((bot, message) => {
+controller.hears(['report', 'rapport'], ['direct_mention','direct_message'], Meteor.bindEnvironment((bot, message) => {
     slack.api('users.info', { user: message.user }, Meteor.bindEnvironment((err, response) => {
         const number = Report.find({}).count();
         const reportId = Report.insert({
@@ -18,35 +18,35 @@ controller.hears('report', ['direct_mention','direct_message'], Meteor.bindEnvir
             learn(message, convo);
         };
         let learn = (message, convo) => {
-            convo.ask('What did you learn about your startup/business during the last week?', Meteor.bindEnvironment((response, convo) => {
-                convo.say('Thanks for your answer ! So you have learn: ' + response.text);
+            convo.ask(i18n('learn.ask'), Meteor.bindEnvironment((response, convo) => {
+                convo.say(i18n('learn.response') + response.text);
                 Report.update({_id: reportId}, { $set: { learn: response.text }});
                 metrics(message, convo);
                 convo.next();
             }));
         };
         let metrics = (message, convo) => {
-            convo.ask('List key metrics you’re tracking, where they’re at, and compare with last few weeks?', Meteor.bindEnvironment((response, convo) => {
-                convo.say('Thanks for your answer ! So you\'re metrics are: ' + response.text);
+            convo.ask(i18n('metrics.ask'), Meteor.bindEnvironment((response, convo) => {
+                convo.say(i18n('metrics.response') + response.text);
                 Report.update({_id: reportId}, { $set: { metrics: response.text }});
                 feeling(message, convo);
                 convo.next();
             }));
         };
         let feeling = (message, convo) => {
-            convo.ask('Overall, how is your startup feeling?', Meteor.bindEnvironment((response, convo) => {
-                convo.say('Thanks for your answer ! So you feel: ' + response.text);
+            convo.ask(i18n('feeling.ask'), Meteor.bindEnvironment((response, convo) => {
+                convo.say(i18n('feeling.response') + response.text);
                 Report.update({_id: reportId}, { $set: { feeling: response.text }});
                 addProblem(message, convo);
                 convo.next();
             }));
         };
         let addProblem = (message, convo) => {
-            convo.ask('Do you want to report a problem?', [
+            convo.ask(i18n('addProblem.ask'), [
                 {
                     pattern: bot.utterances.yes,
                     callback: (response, convo) => {
-                        convo.say('Great! I will continue...');
+                        convo.say(i18n('addProblem.response.yes'));
                         problem(response, convo);
                         convo.next();
                     }
@@ -54,7 +54,7 @@ controller.hears('report', ['direct_mention','direct_message'], Meteor.bindEnvir
                 {
                     pattern: bot.utterances.no,
                     callback: (response, convo) => {
-                        convo.say('Perhaps later.');
+                        convo.say(i18n('addProblem.response.no'));
                         convo.next();
                     }
                 },
@@ -68,43 +68,43 @@ controller.hears('report', ['direct_mention','direct_message'], Meteor.bindEnvir
             ]);
         };
         let problem = (message, convo) => {
-            convo.ask('What is your top problem/question of the week?', (response, convo) => {
-                convo.say('Thanks for your answer !');
+            convo.ask(i18n('problem.ask'), (response, convo) => {
+                convo.say(i18n('problem.response'));
                 solution(message, convo);
                 convo.next();
             });
         };
         let solution = (message, convo) => {
-            convo.ask('How will your try to solve it this week?', (response, convo) => {
-                convo.say('Thanks for your answer !');
+            convo.ask(i18n('solution.ask'), (response, convo) => {
+                convo.say(i18n('solution.response'));
                 why(message, convo);
                 convo.next();
             });
         };
         let why = (message, convo) => {
-            convo.ask('For each solution, why do you think it\'ll work?', (response, convo) => {
-                convo.say('Thanks for your answer !');
+            convo.ask(i18n('why.ask'), (response, convo) => {
+                convo.say(i18n('why.response'));
                 measure(message, convo);
                 convo.next();
             });
         };
         let measure = (message, convo) => {
-            convo.ask('List metrics you’ll use to measure whether or not the solutions are doing what you expected (solving the problem)', (response, convo) => {
-                convo.say('Thanks for your answer !');
+            convo.ask(i18n('measure.ask'), (response, convo) => {
+                convo.say(i18n('measure.response'));
                 proof(message, convo);
                 convo.next();
             });
         };
         let proof = (message, convo) => {
-            convo.ask('List proof (qualitative) you’ll use as well:', (response, convo) => {
-                convo.say('Thanks for your answer !');
+            convo.ask(i18n('proof.ask'), (response, convo) => {
+                convo.say(i18n('proof.response'));
                 goal(message, convo);
                 convo.next();
             });
         };
         let goal = (message, convo) => {
-            convo.ask('Define goals for each metrics', (response, convo) => {
-                convo.say('Thanks for your answer !');
+            convo.ask(i18n('goal.ask'), (response, convo) => {
+                convo.say(i18n('goal.response'));
                 addProblem(message, convo);
                 convo.next();
             });

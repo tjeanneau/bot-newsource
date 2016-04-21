@@ -4,7 +4,7 @@
 
 import { Meteor } from 'meteor/meteor';
 import { Random } from 'meteor/random';
-import { HELLO, WHOAREYOU, R_WHOAREYOU } from '../library/chat';
+import { HELLO, WHOAREYOU, R_WHOAREYOU } from '../vocabulary/chat';
 
 let hello = (bot, message, user) => {
     let text = message.text.toLowerCase(), i;
