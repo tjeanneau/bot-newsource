@@ -10,8 +10,7 @@ import SlackNode from 'slack-node';
 
 const token = Meteor.settings.SLACK_BOT_TOKEN;
 let controller = Botkit.slackbot(),
-    slack = new SlackNode(token),
-    TEAM_ID = null;
+    slack = new SlackNode(token);
 let bot = controller.spawn({
     token: token
 });
@@ -23,7 +22,7 @@ bot.startRTM(function(err, bot, payload) {
     }
 });
 slack.api('auth.test', Meteor.bindEnvironment((err, response) => {
-    TEAM_ID = response.team_id;
+    const TEAM_ID = response.team_id;
     if(!Team.findOne({team_id: TEAM_ID})){
         Team.insert({
             url: response.url,
@@ -37,4 +36,4 @@ slack.api('auth.test', Meteor.bindEnvironment((err, response) => {
     }
 }));
 
-export { slack, controller, bot, TEAM_ID};
+export { slack, controller, bot };
