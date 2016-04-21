@@ -33,7 +33,7 @@ slack.api('auth.test', Meteor.bindEnvironment((err, response) => {
             user_id: response.user_id
         });
     }else{
-        i18n.setLanguage(Team.findOne({team_id: TEAM_ID}).language);
+        i18n.setLanguage(Team.findOne({team_id: TEAM_ID}, {fields: { language: 1}}).language);
     }
 }));
 

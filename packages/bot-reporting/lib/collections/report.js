@@ -40,6 +40,10 @@ Report.schema = new SimpleSchema({
         optional: false,
         defaultValue: 0
     },
+    team_id: {
+        type: String,
+        optional: true
+    },
     learn: {
         type: String,
         optional: true
@@ -52,7 +56,7 @@ Report.schema = new SimpleSchema({
         type: String,
         optional: true
     },
-    problem: {
+    problems: {
         type: [Report.problem],
         optional: true
     }

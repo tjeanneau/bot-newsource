@@ -3,16 +3,18 @@
  */
 
 import { Meteor } from 'meteor/meteor';
-import { slack, controller } from 'meteor/newsource:bot-core';
+import { slack, controller, TEAM_ID } from 'meteor/newsource:bot-core';
 import { Report } from './collections/report';
 import { i18n } from 'meteor/anti:i18n';
 
 controller.hears(['report', 'rapport'], ['direct_mention','direct_message'], Meteor.bindEnvironment((bot, message) => {
     slack.api('users.info', { user: message.user }, Meteor.bindEnvironment((err, response) => {
-        const number = Report.find({}).count();
+        const number = Report.find({}).count() + 1;
         const reportId = Report.insert({
-            number: number + 1
+            number: number,
+            team_id: TEAM_ID
         });
+        let newProblem;
         let start = (err, convo) => {
             convo.say(i18n('welcome') + response.user.name + '! :simple_smile:');
             learn(message, convo);
@@ -44,15 +46,16 @@ controller.hears(['report', 'rapport'], ['direct_mention','direct_message'], Met
         let addProblem = (message, convo) => {
             convo.ask(i18n('addProblem.ask'), [
                 {
-                    pattern: bot.utterances.yes,
+                    pattern: /^(yes|yea|yup|yep|ya|sure|ok|y|yeah|yah|oui|ouais|o)/i,
                     callback: (response, convo) => {
                         convo.say(i18n('addProblem.response.yes'));
+                        newProblem = {};
                         problem(response, convo);
                         convo.next();
                     }
                 },
                 {
-                    pattern: bot.utterances.no,
+                    pattern: /^(no|nah|nope|n|non|nan)/i,
                     callback: (response, convo) => {
                         convo.say(i18n('addProblem.response.no'));
                         convo.next();
@@ -70,6 +73,7 @@ controller.hears(['report', 'rapport'], ['direct_mention','direct_message'], Met
         let problem = (message, convo) => {
             convo.ask(i18n('problem.ask'), (response, convo) => {
                 convo.say(i18n('problem.response'));
+                newProblem.problem = response.text;
                 solution(message, convo);
                 convo.next();
             });
@@ -77,6 +81,7 @@ controller.hears(['report', 'rapport'], ['direct_mention','direct_message'], Met
         let solution = (message, convo) => {
             convo.ask(i18n('solution.ask'), (response, convo) => {
                 convo.say(i18n('solution.response'));
+                newProblem.solution = response.text;
                 why(message, convo);
                 convo.next();
             });
@@ -84,6 +89,7 @@ controller.hears(['report', 'rapport'], ['direct_mention','direct_message'], Met
         let why = (message, convo) => {
             convo.ask(i18n('why.ask'), (response, convo) => {
                 convo.say(i18n('why.response'));
+                newProblem.why = response.text;
                 measure(message, convo);
                 convo.next();
             });
@@ -91,6 +97,7 @@ controller.hears(['report', 'rapport'], ['direct_mention','direct_message'], Met
         let measure = (message, convo) => {
             convo.ask(i18n('measure.ask'), (response, convo) => {
                 convo.say(i18n('measure.response'));
+                newProblem.measure = response.text;
                 proof(message, convo);
                 convo.next();
             });
@@ -98,16 +105,19 @@ controller.hears(['report', 'rapport'], ['direct_mention','direct_message'], Met
         let proof = (message, convo) => {
             convo.ask(i18n('proof.ask'), (response, convo) => {
                 convo.say(i18n('proof.response'));
+                newProblem.proof = response.text;
                 goal(message, convo);
                 convo.next();
             });
         };
         let goal = (message, convo) => {
-            convo.ask(i18n('goal.ask'), (response, convo) => {
+            convo.ask(i18n('goal.ask'), Meteor.bindEnvironment((response, convo) => {
                 convo.say(i18n('goal.response'));
+                newProblem.goal = response.text;
+                Report.update({_id: reportId}, { $push: { problems: newProblem }});
                 addProblem(message, convo);
                 convo.next();
-            });
+            }));
         };
         bot.startConversation(message, start);
     }));

@@ -8,7 +8,7 @@ i18n.map('fr', {
   },
   "metrics": {
     "ask": "Peux-tu me lister les métriques clés que tu traques ? Compare-les avec celles d'il y a quelques semaines.",
-    "response": "Merci pour ta réponse ! :+1::skin-tone-3:  Tes métriques sont donc:: "
+    "response": "Merci pour ta réponse ! :+1::skin-tone-3:  Tes métriques sont donc: "
   },
   "feeling": {
     "ask": "Quel est ton sentiment sur ton projet ?",

@@ -11,7 +11,7 @@ controller.hears(['language', 'langue'], ['direct_mention','direct_message'], Me
     bot.startConversation(message, (err, convo) => {
         convo.ask(i18n('language.ask'), [
             {
-                pattern: '#en|english|anglais|#i',
+                pattern: /(en|english|anglais)/i,
                 callback: Meteor.bindEnvironment((response, convo) => {
                     i18n.setLanguage('en');
                     Team.update({team_id: TEAM_ID}, { $set: { language: 'en'}});
@@ -20,7 +20,7 @@ controller.hears(['language', 'langue'], ['direct_mention','direct_message'], Me
                 })
             },
             {
-                pattern: '#fr|french|français|#i',
+                pattern: /(fr|french|français)/i,
                 callback: Meteor.bindEnvironment((response, convo) => {
                     i18n.setLanguage('fr');
                     Team.update({team_id: TEAM_ID}, { $set: { language: 'fr'}});
