@@ -1,4 +1,4 @@
-import { i18n } from 'meteor/anti:i18n'
+import { i18n } from 'meteor/anti:i18n';
 
 i18n.map('fr', {
   "welcome": "Faisons un petit récapitulatif de ce qu'il s'est passé la semaine dernière dans ta startup ",
@@ -11,14 +11,14 @@ i18n.map('fr', {
     "response": "Merci pour ta réponse ! :+1::skin-tone-3:  Tes métriques sont donc:: "
   },
   "feeling": {
-    "ask": "QUel est ton sentiment sur ton projet ?",
+    "ask": "Quel est ton sentiment sur ton projet ?",
     "response": "Merci pour ta réponse ! :+1::skin-tone-3:  Donc tu te sens: "
   },
   "addProblem": {
     "ask": "Veux-tu faire le rapport d'un problème auquel ta startup est confrontée ?",
     "response": {
       "yes": "Très bien ! Je vais continuer...",
-      "no": "Pas de soucis, peut-être plus tard."
+      "no": "Pas de soucis, peut-être plus tard. :wink:"
     }
   },
   "problem": {

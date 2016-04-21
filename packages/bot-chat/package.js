@@ -14,7 +14,7 @@ Package.onUse(function(api) {
   api.versionsFrom('1.3.1');
   api.use([
     'ecmascript',
-    'random'
+    'anti:i18n@0.4.3'
   ]);
   api.mainModule('lib.js', 'server');
 });

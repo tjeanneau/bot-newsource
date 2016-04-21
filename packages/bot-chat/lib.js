@@ -1,6 +1,5 @@
+import './i18n/fr';
+import './i18n/en';
 import './lib/vocabulary/chat';
-import './lib/vocabulary/request';
-import './lib/modules/_modules';
-import './lib/modules/chat';
-import './lib/direct_message';
+import './lib/hello';
 
