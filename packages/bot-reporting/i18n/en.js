@@ -18,7 +18,9 @@ i18n.map('en', {
     "ask": "Do you want to report a problem?",
     "response": {
       "yes": "Great! I will continue...",
-      "no": "Perhaps later. :wink:"
+      "no": "Perhaps later. :wink:",
+      "finish": "Congratulation! You finish to report your problem! :tada:",
+      "email": "An email with your report has just be send to you ! :mailbox_with_mail:"
     }
   },
   "problem": {

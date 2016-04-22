@@ -1,5 +1,5 @@
 Package.describe({
-  name: 'newsource:bot-reporting',
+  name: 'newsource:bot-email',
   version: '0.0.1',
   // Brief, one-line summary of the package.
   summary: '',
@@ -11,24 +11,17 @@ Package.describe({
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom('1.3.1');
+  api.versionsFrom('1.3.2.4');
   api.use([
     'ecmascript',
-    'aldeed:simple-schema@1.5.3',
-    'aldeed:collection2@2.9.1',
-    'newsource:bot-core@0.0.1',
-    'newsource:bot-email@0.0.1',
-    'anti:i18n@0.4.3',
-    'meteorhacks:ssr@2.2.0',
-    'blaze-html-templates@1.0.4'
+    'cunneen:mailgun@0.9.1'
   ]);
-  api.addAssets('lib/template.html', 'server');
   api.mainModule('lib.js', 'server');
 });
 
 Package.onTest(function(api) {
   api.use('ecmascript');
   api.use('tinytest');
-  api.use('newsource:bot-reporting');
-  api.mainModule('bot-reporting-tests.js');
+  api.use('newsource:bot-email');
+  api.mainModule('bot-email-tests.js');
 });

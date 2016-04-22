@@ -7,6 +7,23 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 let Team = new Mongo.Collection('team');
 
+Team.report = new SimpleSchema({
+    recurrence: {
+        type: String,
+        allowedValues: ['week', 'month'],
+        optional: false
+    },
+    startingDay: {
+        type: String,
+        allowedValues: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        optional: false
+    },
+    hour: {
+        type: String,
+        optional: false
+    }
+});
+
 Team.schema = new SimpleSchema({
     url: {
         type: String,
@@ -33,6 +50,10 @@ Team.schema = new SimpleSchema({
         type: String,
         optional: false,
         defaultValue: 'en'
+    },
+    report: {
+        type: [Team.report],
+        optional: true
     }
 });
 

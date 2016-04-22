@@ -1,0 +1,17 @@
+<div>
+    <p>Hello {{ username }}</p>
+    <p>This is you report:</p>
+    <p><strong>Learn: </strong>{{ learn }}</p>
+    <p><strong>Metrics: </strong>{{ metrics }}</p>
+    <p><strong>Feeling: </strong>{{ feeling }}</p>
+    <ul>
+        {{#each problems}}
+            <li><em>Problem: </em>{{ this.problem }}</li>
+            <li><em>Solution: </em>{{ this.solution }}</li>
+            <li><em>Why: </em>{{ this.why }}</li>
+            <li><em>Measure: </em>{{ this.measure }}</li>
+            <li><em>Proof: </em>{{ this.proof }}</li>
+            <li><em>Goal: </em>{{ this.goal }}</li>
+        {{/each}}
+    </ul>
+</div>

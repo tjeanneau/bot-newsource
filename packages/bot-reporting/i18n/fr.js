@@ -18,7 +18,9 @@ i18n.map('fr', {
     "ask": "Veux-tu faire le rapport d'un problème auquel ta startup est confrontée ?",
     "response": {
       "yes": "Très bien ! Je vais continuer...",
-      "no": "Pas de soucis, peut-être plus tard. :wink:"
+      "no": "Pas de soucis, peut-être plus tard. :wink:",
+      "finish": "Félicitation! Tu as fini de me rapporter ton problème ! :tada:",
+      "email": "Un email avec ton rapport viens juste de t'être envoyé ! :mailbox_with_mail:"
     }
   },
   "problem": {

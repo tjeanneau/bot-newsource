@@ -24,3 +24,7 @@ newsource:bot-core
 newsource:bot-reporting
 newsource:bot-chat
 anti:i18n
+newsource:bot-email
+meteorhacks:ssr
+cunneen:mailgun
+check

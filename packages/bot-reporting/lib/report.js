@@ -4,7 +4,7 @@
 
 import { Meteor } from 'meteor/meteor';
 import { slack, controller, TEAM_ID } from 'meteor/newsource:bot-core';
-import { Report } from './collections/report';
+import { Report } from './collection';
 import { i18n } from 'meteor/anti:i18n';
 
 controller.hears(['report', 'rapport'], ['direct_mention','direct_message'], Meteor.bindEnvironment((bot, message) => {
@@ -57,10 +57,12 @@ controller.hears(['report', 'rapport'], ['direct_mention','direct_message'], Met
                     },
                     {
                         pattern: /^(no|nah|nope|n|non|nan)/i,
-                        callback: (response, convo) => {
+                        callback: Meteor.bindEnvironment((response, convo) => {
                             convo.say(i18n('addProblem.response.no'));
+                            Meteor.call('sendReport', user.user, reportId);
+                            convo.say(i18n('addProblem.response.email'));
                             convo.next();
-                        }
+                        })
                     },
                     {
                         default: true,
@@ -114,6 +116,7 @@ controller.hears(['report', 'rapport'], ['direct_mention','direct_message'], Met
             let goal = Meteor.bindEnvironment((message, convo) => {
                 convo.ask(i18n('goal.ask'), Meteor.bindEnvironment((response, convo) => {
                     convo.say(i18n('goal.response'));
+                    convo.say(i18n('addProblem.response.finish'));
                     newProblem.goal = response.text;
                     Report.update({_id: reportId}, {$push: {problems: newProblem}});
                     addProblem(message, convo);
